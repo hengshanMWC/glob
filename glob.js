@@ -48,7 +48,6 @@ var EE = require('events').EventEmitter
 var path = require('path')
 var assert = require('assert')
 var isAbsolute = require('path-is-absolute')
-var globSync = require('./sync.js')
 var common = require('./common.js')
 var setopts = common.setopts
 var ownProp = common.ownProp
@@ -63,17 +62,8 @@ function glob (pattern, options, cb) {
   if (typeof options === 'function') cb = options, options = {}
   if (!options) options = {}
 
-  if (options.sync) {
-    if (cb)
-      throw new TypeError('callback provided to sync glob')
-    return globSync(pattern, options)
-  }
-
   return new Glob(pattern, options, cb)
 }
-
-glob.sync = globSync
-var GlobSync = glob.GlobSync = globSync.GlobSync
 
 // old api surface
 glob.glob = glob
@@ -118,12 +108,6 @@ function Glob (pattern, options, cb) {
   if (typeof options === 'function') {
     cb = options
     options = null
-  }
-
-  if (options && options.sync) {
-    if (cb)
-      throw new TypeError('callback provided to sync glob')
-    return new GlobSync(pattern, options)
   }
 
   if (!(this instanceof Glob))
@@ -584,7 +568,7 @@ Glob.prototype._readdirError = function (f, er, cb) {
 
   // handle errors, and cache the information
   switch (er.code) {
-    case 'ENOTSUP': // https://github.com/isaacs/node-glob/issues/205
+    case 'ENOTSUP': // https://github.com/hengshanMWC/glob/issues/205
     case 'ENOTDIR': // totally normal. means it *does* exist.
       var abs = this._makeAbs(f)
       this.cache[abs] = 'FILE'

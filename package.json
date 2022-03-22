@@ -1,11 +1,11 @@
 {
-  "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)",
-  "name": "glob",
-  "description": "a little globber",
-  "version": "7.2.1",
+  "author": "mawencan",
+  "name": "@abmao/glob",
+  "description": "Solve the circular dependency of glob",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/isaacs/node-glob.git"
+    "url": "git://github.com/hengshanMWC/glob.git"
   },
   "main": "glob.js",
   "files": [
