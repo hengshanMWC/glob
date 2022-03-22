@@ -1,7 +1,7 @@
 require('./global-leakage.js')
 // Ignore option test
 // Show that glob ignores results matching pattern on ignore option
-
+var sync = require('../sync')
 var glob = require('../glob.js')
 var test = require('tap').test
 
@@ -72,7 +72,7 @@ cases.forEach(function (c, i) {
 
       t.same(res.sort(), expect, 'async')
       t.same(matches.sort(), expect, 'match events')
-      res = glob.sync(pattern, opt)
+      res = sync(pattern, opt)
       t.same(res.sort(), expect, 'sync')
       t.end()
     }).on('match', function (p) {
@@ -98,7 +98,7 @@ test('race condition', function (t) {
           var expect = ignore ? [] : [ 'fixtures/a' ]
           t.test(JSON.stringify(opt), function (t) {
             t.plan(2)
-            t.same(glob.sync(pattern, opt), expect)
+            t.same(sync(pattern, opt), expect)
             glob(pattern, opt).on('end', function (res) {
               t.same(res, expect)
             })

@@ -5,7 +5,9 @@ var origCwd = process.cwd()
 process.chdir(__dirname + '/fixtures')
 var path = require('path')
 var isAbsolute = require('path-is-absolute')
+var sync = require('../sync')
 var glob = require('../')
+
 
 function cacheCheck(g, t) {
   // verify that path cache keys are all absolute
@@ -77,7 +79,7 @@ tap.test('non-dir cwd should raise error', function (t) {
   var msg = 'raise error when cwd is not a dir'
 
   t.throws(function () {
-    glob.sync('*', { cwd: notdir })
+    sync('*', { cwd: notdir })
   }, expect)
   glob('*', { cwd: notdir }, function (er, results) {
     t.match(er, expect)

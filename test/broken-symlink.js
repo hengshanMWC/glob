@@ -1,6 +1,8 @@
 var fs = require('fs')
 var test = require('tap').test
+var sync = require('../sync')
 var glob = require('../')
+
 var mkdirp = require('mkdirp')
 
 if (process.platform === 'win32')
@@ -64,7 +66,7 @@ test('sync test', function (t) {
       t.plan(opts.length)
 
       opts.forEach(function (opt) {
-        var res = glob.sync(pattern, opt)
+        var res = sync(pattern, opt)
         t.not(res.indexOf(link), -1, 'opt=' + JSON.stringify(opt))
       })
     })

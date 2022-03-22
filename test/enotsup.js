@@ -40,6 +40,7 @@ fs.readdir = function (p, cb) {
 }
 
 var glob = require('../')
+var sync = require('../sync')
 var test = require('tap').test
 var common = require('../common.js')
 process.chdir(__dirname + '/fixtures')
@@ -50,7 +51,7 @@ var expect = [ 'a/abcdef/g/h', 'a/abcfed/g/h' ]
 var options = { strict: true, silent: false }
 
 test(pattern + ' ' + JSON.stringify(options), function (t) {
-  var res = glob.sync(pattern, options).sort()
+  var res = sync(pattern, options).sort()
   t.same(res, expect, 'sync results')
   t.ok(sawSyncENOTSUP, 'saw sync ENOTSUP')
 

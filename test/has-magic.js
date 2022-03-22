@@ -1,15 +1,16 @@
 require("./global-leakage.js")
 var test = require("tap").test
 var glob = require('../')
+var sync = require('../sync')
 process.chdir(__dirname)
 
-glob.GlobSync.prototype._process = glob.Glob.prototype._process = function () {
+sync.GlobSync.prototype._process = glob.Glob.prototype._process = function () {
   throw new Error('should not call _process() in these tests')
 }
 
 test("create glob object without processing", function (t) {
   t.ok(glob('a', {noprocess:true}) instanceof glob.Glob)
-  t.ok(glob.GlobSync('a', {noprocess:true}) instanceof glob.GlobSync)
+  t.ok(sync.GlobSync('a', {noprocess:true}) instanceof sync.GlobSync)
   t.end()
 })
 

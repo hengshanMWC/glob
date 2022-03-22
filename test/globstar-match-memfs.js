@@ -2,7 +2,7 @@ require("./global-leakage.js")
 var memfs = require('memfs')
 var test = require('tap').test
 var glob = require("../glob.js")
-
+var sync = require('../sync')
 test('fs-compatible file system can be used', function (t) {
   var volJson = {
     './text1.txt': 'abc',
@@ -17,14 +17,14 @@ test('fs-compatible file system can be used', function (t) {
   })
 })
 
-test('fs-compatible file system can be used with glob.sync', function (t) {
+test('fs-compatible file system can be used with sync', function (t) {
   var volJson = {
     './text1.txt': 'abc',
     './javascript.js': 'abc',
     './text2.txt': 'abc',
   }
   var vol = memfs.Volume.fromJSON(volJson, '/some/directory')
-  var f = glob.sync('*.txt', { cwd: '/some/directory', fs: vol })
+  var f = sync('*.txt', { cwd: '/some/directory', fs: vol })
   t.same(f, ['text1.txt', 'text2.txt'], 'matched txt files')
   t.end()
 })

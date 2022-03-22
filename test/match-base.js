@@ -1,5 +1,6 @@
 var t = require('tap')
 var glob = require('../')
+var sync = require('../sync')
 var path = require('path')
 var fixtureDir = path.resolve(__dirname, 'fixtures')
 
@@ -16,8 +17,7 @@ if (process.platform !== 'win32')
 t.test('chdir', function (t) {
   var origCwd = process.cwd()
   process.chdir(fixtureDir)
-  t.same(glob.sync(pattern, { matchBase: true }), expect)
-  t.same(glob(pattern, { matchBase: true, sync: true }), expect)
+  t.same(sync(pattern, { matchBase: true }), expect)
   glob(pattern, { matchBase: true }, function (er, res) {
     if (er)
       throw er
@@ -28,8 +28,7 @@ t.test('chdir', function (t) {
 })
 
 t.test('cwd', function (t) {
-  t.same(glob.sync(pattern, { matchBase: true, cwd: fixtureDir }), expect)
-  t.same(glob(pattern, { matchBase: true, sync: true, cwd: fixtureDir }), expect)
+  t.same(sync(pattern, { matchBase: true, cwd: fixtureDir }), expect)
   glob(pattern, { matchBase: true, cwd: fixtureDir }, function (er, res) {
     if (er)
       throw er
@@ -43,7 +42,7 @@ t.test('noglobstar', function (t) {
     glob(pattern, { matchBase:true, noglobstar: true })
   })
   t.throws(function () {
-    glob.sync(pattern, { matchBase:true, noglobstar: true })
+    sync(pattern, { matchBase:true, noglobstar: true })
   })
   t.end()
 })

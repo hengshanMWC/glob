@@ -38,6 +38,7 @@ fs.lstatSync = function (path) {
 }
 
 var glob = require('../')
+var sync = require('../sync')
 var t = require('tap')
 
 t.test('stat errors other than ENOENT are ok', function (t) {
@@ -52,7 +53,7 @@ t.test('stat errors other than ENOENT are ok', function (t) {
   })
 
   t.test('sync', function (t) {
-    var matches = glob.sync('a/*abc*/**', { stat: true, cwd: dir })
+    var matches = sync('a/*abc*/**', { stat: true, cwd: dir })
     t.same(matches, expect)
     t.end()
   })
@@ -105,7 +106,7 @@ t.test('globstar with error in root', function (t) {
   })
 
   t.test('sync', function (t) {
-    var matches = glob.sync(pattern, { cwd: dir })
+    var matches = sync(pattern, { cwd: dir })
     t.same(matches, expect)
     t.end()
   })

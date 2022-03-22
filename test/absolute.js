@@ -1,6 +1,7 @@
 require('./global-leakage.js')
 var t = require('tap')
 var glob = require('../')
+var sync = require('../sync')
 var common = require('../common.js')
 var pattern = 'a/b/**';
 var bashResults = require('./bash-results.json')
@@ -37,7 +38,7 @@ marks.forEach(function (mark) {
     })
 
     t.test('returns absolute results synchronously', function (t) {
-      var results = glob.sync(pattern, { absolute: true })
+      var results = sync(pattern, { absolute: true })
 
       t.equal(results.length, bashResults[pattern].length, 'must match all files')
       results.forEach(function (m) {

@@ -1,4 +1,5 @@
 var glob = require('../')
+var sync = require('../sync')
 var test = require('tap').test
 
 process.chdir(__dirname + '/fixtures')
@@ -10,8 +11,8 @@ if (process.platform === 'win32') {
 
 test('follow symlinks', function (t) {
   var pattern = 'a/symlink/**'
-  var syncNoFollow = glob.sync(pattern).sort()
-  var syncFollow = glob.sync(pattern, { follow: true }).sort()
+  var syncNoFollow = sync(pattern).sort()
+  var syncFollow = sync(pattern, { follow: true }).sort()
   glob(pattern, function (er, res) {
     if (er)
       throw er

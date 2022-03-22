@@ -1,6 +1,7 @@
 require("./global-leakage.js")
 var test = require("tap").test
 var glob = require('../')
+var sync = require('../sync')
 process.chdir(__dirname + '/fixtures')
 
 // expose timing issues
@@ -32,7 +33,7 @@ test('mark with cwd', function (t) {
       expect.push('symlink/a/')
 
     t.same(res.sort(), expect)
-    t.same(glob.sync(pattern, opt).sort(), expect)
+    t.same(sync(pattern, opt).sort(), expect)
     t.end()
   })
 })
@@ -61,7 +62,7 @@ test("mark, with **", function (t) {
         'a/cb/e/f' ]
 
     t.same(results, expect)
-    t.same(glob.sync(pattern, opt), expect)
+    t.same(sync(pattern, opt), expect)
     t.end()
   })
 })
@@ -87,7 +88,7 @@ test("mark, no / on pattern", function (t) {
     expect = expect.sort()
 
     t.same(results, expect)
-    t.same(glob.sync(pattern, opt), expect)
+    t.same(sync(pattern, opt), expect)
     t.end()
   }).on('match', function(m) {
     t.match(m, /\/$/)
@@ -115,7 +116,7 @@ test("mark=false, no / on pattern", function (t) {
     expect = expect.sort()
 
     t.same(results, expect)
-    t.same(glob.sync(pattern, opt), expect)
+    t.same(sync(pattern, opt), expect)
     t.end()
   }).on('match', function(m) {
     t.match(m, /[^\/]$/)
@@ -143,7 +144,7 @@ test("mark=true, / on pattern", function (t) {
     expect = expect.sort()
 
     t.same(results, expect)
-    t.same(glob.sync(pattern, opt), expect)
+    t.same(sync(pattern, opt), expect)
     t.end()
   }).on('match', function(m) {
     t.match(m, /\/$/)
@@ -170,7 +171,7 @@ test("mark=false, / on pattern", function (t) {
     expect = expect.sort()
 
     t.same(results, expect)
-    t.same(glob.sync(pattern, opt), expect)
+    t.same(sync(pattern, opt), expect)
     t.end()
   }).on('match', function(m) {
     t.match(m, /\/$/)
@@ -185,7 +186,7 @@ var cwd = process.cwd().replace(/[\/\\]+$/, '').replace(/\\/g, '/')
       glob(pattern, {mark:mark}, function (er, results) {
         t.equal(results.length, 1)
         var res = results[0].replace(/\\/g, '/')
-        var syncRes = glob.sync(pattern, {mark:mark})
+        var syncRes = sync(pattern, {mark:mark})
         syncRes = syncRes[0].replace(/\\/g, '/')
         if (slash || mark)
           t.equal(res, cwd + '/')

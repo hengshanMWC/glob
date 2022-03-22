@@ -1,4 +1,5 @@
 var glob = require('../')
+var sync = require('../sync')
 var test = require('tap').test
 // pattern to find a bunch of duplicates
 var pattern = 'a/symlink/{*,**/*/*/*,*/*/**,*/*/*/*/*/*}'
@@ -81,8 +82,8 @@ cases.forEach(function (c) {
 
   test(JSON.stringify(opt), function (t) {
     opt.realpath = true
-    var sync = glob.sync(p, opt)
-    t.same(sync, expect, 'sync')
+    var _sync = sync(p, opt)
+    t.same(_sync, expect, 'sync')
     glob(p, opt, function (er, async) {
       if (er)
         throw er

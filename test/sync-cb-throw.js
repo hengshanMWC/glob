@@ -1,35 +1,29 @@
 require("./global-leakage.js")
 var test = require('tap').test
 var g = require('../')
+var sync = require('../sync')
 test('sync throws if provided callback', function (t) {
   t.throws(function () {
-    g('*', {sync:true}, function() {})
+    sync('*', function() {})
   })
   t.throws(function () {
-    g.sync('*', function() {})
-  })
-  t.throws(function () {
-    g.sync('*', {}, function() {})
+    sync('*', {}, function() {})
   })
 
   t.throws(function () {
-    g.Glob('*', {sync:true}, function() {})
+    sync.GlobSync('*', {}, function() {})
   })
 
   t.throws(function () {
-    g.GlobSync('*', {}, function() {})
+    sync.GlobSync('*', function() {})
   })
 
   t.throws(function () {
-    g.GlobSync('*', function() {})
+    sync.GlobSync()
   })
 
   t.throws(function () {
-    g.GlobSync()
-  })
-
-  t.throws(function () {
-    g.sync()
+    sync()
   })
 
   t.throws(function () {

@@ -5,6 +5,7 @@ var tap = require("tap")
 var child_process = require("child_process")
 var bashResults = require("./bash-results.json")
 var globs = Object.keys(bashResults)
+var sync = require("../sync")
 var glob = require("../")
 var path = require("path")
 var isAbsolute = require("path-is-absolute")
@@ -56,7 +57,7 @@ globs.forEach(function (pattern) {
   })
 
   tap.test(pattern + " sync", function (t) {
-    var matches = cleanResults(glob.sync(pattern))
+    var matches = cleanResults(sync(pattern))
 
     t.same(matches, expect, "should match shell (sync)")
     t.end()
